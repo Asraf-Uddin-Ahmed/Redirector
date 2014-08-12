@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Redirector",
+  "description": "This extension redirect to specific page according to url data.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "Redirector.png",
+    "default_popup": "popup.html"
+  },
+  
+  "background": {"scripts":["jquery-2.1.1.min.js", "redirect.js"]},
+  
+  "permissions": [
+    "webRequest",
+	"*://*/*",
+	"webRequestBlocking"
+  ]
+
+}
