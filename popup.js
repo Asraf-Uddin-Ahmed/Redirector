@@ -10,7 +10,11 @@ $(function () {
         redirectList = storedData['RedirectList'];
 
         for (var index in redirectList) {
-            //$("#allPair").prepend("<li>" + index + " -> " + redirectList[index] + "</li>");
+            $("#showAllTableBody").append("<tr>" +
+                                    "<td><input type='text' value='" + index + "' /></td>" +
+                                    "<td><input type='text' value='" + redirectList[index] + "' /></td>" +
+                                    "<td><input type='button' value='delete' /></td>" +
+                                "</tr>");
         }
     });
 
