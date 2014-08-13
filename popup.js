@@ -26,6 +26,19 @@ $(function () {
 
     reloadRedirectList();
 
+    $("#addNewDivAddUrl").click(function () {
+        var blockWord = $("#blockWord").val();
+        var redirectUrl = $("#redirectUrl").val();
+        redirectList[blockWord] = redirectUrl;
+        saveRedirectList(redirectList);
+        goToMainPopup($("#addNewDiv"));
+    });
+
+    $("#addNewDivCancel").click(function () {
+        goToMainPopup($("#addNewDiv"));
+    });
+
+
 
     $("#showAllTableBody").on("click", ".delete_row_show_all", function () {
         var tr = $(this).closest('tr');
