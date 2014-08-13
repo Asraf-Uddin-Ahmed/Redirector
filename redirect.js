@@ -8,7 +8,7 @@ var redirectList = {
 // Save it using the Chrome extension storage API.
 chrome.storage.sync.set({ 'RedirectList': redirectList }, function () {
     // Notify that we saved.
-    alert('Redirect list saved');
+    //alert('Redirect list saved');
 });
 
 
