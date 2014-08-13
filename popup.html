@@ -11,12 +11,48 @@
 
     <div id="mainPopup">
         <ul id="allPair">
+            <li id="showAll">Show All</li>
             <li id="addNew">Add New</li>
         </ul>
     </div>
 
+
+
     <div id="addNewDiv" class="optionalDiv">
-        <iframe src="addurl.html"></iframe>
+        <input type="text" id="blockWord" placeholder="Enter Word" />
+        <br />
+        <input type="text" id="redirectUrl" placeholder="Enter Url" />
+        <br />
+        <input type="button" value="Add" id="AddUrl" />
+    </div>
+
+
+
+    <div id="showAllDiv" class="optionalDiv">
+        <table>
+            <thead>
+                <tr>
+                    <th>Blocked Word</th>
+                    <th>Redirect URL</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="showAllTableBody">
+                <tr>
+                    <td>
+                        <input type="text" value="word" /></td>
+                    <td>
+                        <input type="text" value="url" /></td>
+                    <td>
+                        <input type="button" value="update" /></td>
+                    <td>
+                        <input type="button" value="delete" /></td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
 
 </body>
