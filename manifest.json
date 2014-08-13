@@ -15,7 +15,8 @@
   "permissions": [
     "webRequest",
 	"*://*/*",
-	"webRequestBlocking"
+	"webRequestBlocking",
+	"storage"
   ]
 
 }

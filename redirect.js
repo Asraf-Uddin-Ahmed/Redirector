@@ -1,8 +1,16 @@
 
-var redirectList = [];
-redirectList["asraf"] = "https://www.facebook.com/";
-redirectList["uddin"] = "https://www.google.com/";
-redirectList["ahmed"] = "https://www.bing.com/";
+var redirectList = {
+    "asraf": "https://www.facebook.com/",
+    "uddin": "https://www.google.com/",
+    "ahmed": "https://www.bing.com/"
+};
+
+// Save it using the Chrome extension storage API.
+chrome.storage.sync.set({ 'RedirectList': redirectList }, function () {
+    // Notify that we saved.
+    alert('Redirect list saved');
+});
+
 
 var blockPatterns = [];
 for (var index in redirectList) {
