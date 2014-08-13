@@ -1,14 +1,31 @@
 
-var storedData;
+var redirectList;
 
+function reloadRedirectList() {
+    chrome.storage.sync.get(function (items) {
+        redirectList = items['RedirectList'];
+    });
+}
+
+function saveRedirectList(redirectList) {
+    // Save it using the Chrome extension storage API.
+    chrome.storage.sync.set({ 'RedirectList': redirectList }, function () {
+        // Notify that we saved.
+        //alert('Redirect list saved');
+        reloadRedirectList();
+    });
+}
+
+function goToMainPopup(hideObj) {
+    hideObj.hide(300, function () {
+        $("#mainPopup").show(300);
+    });
+}
 
 $(function () {
 
-    var redirectList;
-    chrome.storage.sync.get(function (items) {
-        storedData = items;
-        redirectList = storedData['RedirectList'];
-    });
+    reloadRedirectList();
+
 
     $("#showAllTableBody").on("click", ".delete_row_show_all", function () {
         var tr = $(this).closest('tr');
@@ -19,16 +36,18 @@ $(function () {
     });
     
     $("#showAllDivSave").click(function () {
+        var redirectListNew = {};
         $("#showAllTableBody").find('tr').each(function () {
             var cols = $(this).find('input[type=text]');
-            console.log(cols[0].value + " -> " + cols[1].value);
+            redirectListNew[cols[0].value] = cols[1].value;
+            //console.log(cols[0].value + " -> " + cols[1].value);
         });
+        saveRedirectList(redirectListNew);
+        goToMainPopup($("#showAllDiv"));
     });
 
     $("#showAllDivCancel").click(function () {
-        $("#showAllDiv").hide(300, function () {
-            $("#mainPopup").show(300);
-        });
+        goToMainPopup($("#showAllDiv"));
     });
 
 
