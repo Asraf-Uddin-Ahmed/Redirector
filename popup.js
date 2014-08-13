@@ -13,4 +13,9 @@ $(function () {
         }
     });
     
+    $("#addNew").click(function () {
+        $("#mainPopup").hide(300, function () {
+            $("#addNewDiv").show(300);
+        });
+    });
 });

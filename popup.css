@@ -11,3 +11,7 @@ li:hover {
     cursor: pointer;
     background-color: Gainsboro;
 }
+
+.optionalDiv {
+    display: none;
+}
