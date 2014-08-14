@@ -1,35 +1,46 @@
 
-var redirectList = {
-    "asraf": "https://www.facebook.com/",
-    "uddin": "https://www.google.com/",
-    "ahmed": "https://www.bing.com/"
-};
-
-// Save it using the Chrome extension storage API.
-chrome.storage.sync.set({ 'RedirectList': redirectList }, function () {
-    // Notify that we saved.
-    //alert('Redirect list saved');
-});
-
-
+var redirectList = {};
 var blockPatterns = [];
-for (var index in redirectList) {
-    blockPatterns.push("*://*/*" + index + "*");
+
+var redirectCallback = function (details) {
+    var url = details.url;
+    for (var index in redirectList) {
+        if (url.indexOf(index) != -1) {
+            url = redirectList[index];
+        }
+    }
+    return { redirectUrl: url };
 }
 
-chrome.webRequest.onBeforeRequest.addListener(
-	function (details) {
-	    console.log(details);
+function addListenerOnBeforeRequest() {
+    chrome.webRequest.onBeforeRequest.addListener(
+        redirectCallback,
+        { urls: blockPatterns },
+        ["blocking"]
+    );
+}
 
-	    var url = details.url;
-	    for (var index in redirectList) {
-	        if (url.indexOf(index) != -1) {
-	            url = redirectList[index];
-	        }
-	    }
+function removeListenerOnBeforeRequest() {
+    chrome.webRequest.onBeforeRequest.removeListener(redirectCallback);
+}
 
-	    return { redirectUrl: url };
-	},
-	{ urls: blockPatterns },
-	["blocking"]
-);
+function addListenerOnBeforeRequestFromStorage() {
+    chrome.storage.sync.get(function (items) {
+        redirectList = items['RedirectList'];
+        blockPatterns = [];
+        for (var index in redirectList) {
+            blockPatterns.push("*://*/*" + index + "*");
+        }
+        console.log(blockPatterns);
+        addListenerOnBeforeRequest();
+    });
+}
+
+
+addListenerOnBeforeRequestFromStorage();
+
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    removeListenerOnBeforeRequest();
+    addListenerOnBeforeRequestFromStorage();
+});
