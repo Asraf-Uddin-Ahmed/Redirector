@@ -17,6 +17,7 @@ function saveRedirectList(redirectList) {
 }
 
 function goToMainPopup(hideObj) {
+    playWhistle();
     hideObj.hide(300, function () {
         $("#mainPopup").show(300);
     });
@@ -64,7 +65,7 @@ $(function () {
     });
 
 
-
+    
     $("#addNew").click(function () {
         $("#mainPopup").hide(300, function () {
             $("#addNewDiv").show(300);
@@ -85,5 +86,9 @@ $(function () {
         $("#mainPopup").hide(300, function () {
             $("#showAllDiv").show(300);
         });
+    });
+
+    $("#addNew, #showAll").click(function () {
+        playClick();
     });
 });
