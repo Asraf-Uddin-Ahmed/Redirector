@@ -45,6 +45,7 @@ function createsoundbite(sound) {
 
 var whistlesound = createsoundbite("whistle.ogg", "whistle.mp3")
 var clicksound = createsoundbite("click.ogg", "click.mp3")
+var deletesound = createsoundbite("delete_sound.wav")
 
 
 function playClick() {
@@ -53,4 +54,8 @@ function playClick() {
 
 function playWhistle() {
     whistlesound.playclip();
+}
+
+function playDeleteSound() {
+    deletesound.playclip();
 }

@@ -42,6 +42,8 @@ $(function () {
 
 
     $("#showAllTableBody").on("click", ".delete_row_show_all", function () {
+        playDeleteSound();
+
         var tr = $(this).closest('tr');
         tr.css("background-color", "#FF3700");
         tr.fadeOut(400, function () {
