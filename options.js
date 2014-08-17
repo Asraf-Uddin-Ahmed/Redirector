@@ -30,6 +30,9 @@ $(function () {
     $("#addNewDivAddUrl").click(function () {
         var blockWord = $("#blockWord").val();
         var redirectUrl = $("#redirectUrl").val();
+        $("#blockWord").val("");
+        $("#redirectUrl").val("");
+
         redirectList[blockWord] = redirectUrl;
         saveRedirectList(redirectList);
         goToMainPopup($("#addNewDiv"));

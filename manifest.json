@@ -3,7 +3,7 @@
 
   "name": "Redirector",
   "description": "This extension redirect to specific page according to url data.",
-  "version": "1.0",
+  "version": "1.1",
 
   "background": {"scripts":["redirect.js"]},
   "options_page": "options.html",
