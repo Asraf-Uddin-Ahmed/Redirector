@@ -1,31 +1,47 @@
 
-var redirectList;
+REDIRECTOR.chromeStorage = function () {
+    var objToReturn = {};
 
-function reloadRedirectList() {
-    chrome.storage.sync.get(function (items) {
-        redirectList = items['RedirectList'];
-    });
-}
+    /*
+    PRIVATE
+    */
+    var objRedirect = {};
+    
+    var reloadRedirectObject = function () {
+        chrome.storage.sync.get(function (items) {
+            var obj = items['RedirectList'];
+            objRedirect = jQuery.extend({}, obj);
+        });
+    }
 
-function saveRedirectList(redirectList) {
-    // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({ 'RedirectList': redirectList }, function () {
-        // Notify that we saved.
-        //alert('Redirect list saved');
-        reloadRedirectList();
-    });
-}
+    var saveRedirectObject = function (obj) {
+        chrome.storage.sync.set({ 'RedirectList': obj }, function () {
+            reloadRedirectObject();
+        });
+    }
 
-function goToMainPopup(hideObj) {
-    playWhistle();
-    hideObj.hide(300, function () {
-        $("#mainPopup").show(300);
-    });
-}
+    var pushUrlByWord = function (word, url) {
+        objRedirect[word] = url;
+        return objRedirect;
+    }
+
+    var getRedirectObject = function () {
+        return objRedirect;
+    }
+
+    /*PUBLIC*/
+    objToReturn.reloadRedirectObject = reloadRedirectObject;
+    objToReturn.saveRedirectObject = saveRedirectObject;
+    objToReturn.pushUrlByWord = pushUrlByWord;
+    objToReturn.getRedirectObject = getRedirectObject;
+
+    return objToReturn;
+}();
+
 
 $(function () {
 
-    reloadRedirectList();
+    REDIRECTOR.chromeStorage.reloadRedirectObject();
 
     $("#addNewDivAddUrl").click(function () {
         var blockWord = $("#blockWord").val();
@@ -33,8 +49,8 @@ $(function () {
         $("#blockWord").val("");
         $("#redirectUrl").val("");
 
-        redirectList[blockWord] = redirectUrl;
-        saveRedirectList(redirectList);
+        var objRedirect = REDIRECTOR.chromeStorage.pushUrlByWord(blockWord, redirectUrl);
+        REDIRECTOR.chromeStorage.saveRedirectObject(objRedirect);
         goToMainPopup($("#addNewDiv"));
     });
 
@@ -61,7 +77,7 @@ $(function () {
             redirectListNew[cols[0].value] = cols[1].value;
             //console.log(cols[0].value + " -> " + cols[1].value);
         });
-        saveRedirectList(redirectListNew);
+        REDIRECTOR.chromeStorage.saveRedirectObject(redirectListNew);
         goToMainPopup($("#showAllDiv"));
     });
 
@@ -80,7 +96,8 @@ $(function () {
     $("#showAll").click(function () {
 
         $("#showAllTableBody").empty();
-        $.each(redirectList, function (index, value) {
+        var objRedirect = REDIRECTOR.chromeStorage.getRedirectObject();
+        $.each(objRedirect, function (index, value) {
             $("#showAllTableBody").append("<tr>" +
                                     "<td><input type='text' value='" + index + "' /></td>" +
                                     "<td><input type='text' value='" + value + "' /></td>" +

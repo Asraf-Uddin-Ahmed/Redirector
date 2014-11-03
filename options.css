@@ -16,3 +16,7 @@ li:hover {
 .optionalDiv {
     display: none;
 }
+
+th {
+    padding: 15px 30px 15px 30px;
+}

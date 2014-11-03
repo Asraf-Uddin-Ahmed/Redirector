@@ -1,4 +1,13 @@
 
+var REDIRECTOR = {};
+
+function goToMainPopup(hideObj) {
+    playWhistle();
+    hideObj.hide(300, function () {
+        $("#mainPopup").show(300);
+    });
+}
+
 function changePopup(pageName) {
     chrome.browserAction.setPopup({
         popup: pageName
