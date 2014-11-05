@@ -40,10 +40,21 @@ REDIRECTOR.chromeStorage = function () {
 
 
 $(function () {
-
+    
     REDIRECTOR.chromeStorage.reloadRedirectObject();
 
+    var objAddNewForm = $("#addNewForm");
+    var objShowAllForm = $("#showAllForm");
+
+    objAddNewForm.validationEngine({ promptPosition: "centerRight", scroll: false });
+    objShowAllForm.validationEngine({ promptPosition: "topRight", scroll: false });
+
+
     $("#addNewDivAddUrl").click(function () {
+        var isValid = objAddNewForm.validationEngine('validate');
+        if (isValid == false)
+            return;
+
         var blockWord = $("#blockWord").val();
         var redirectUrl = $("#redirectUrl").val();
         $("#blockWord").val("");
@@ -71,6 +82,10 @@ $(function () {
     });
     
     $("#showAllDivSave").click(function () {
+        var isValid = objShowAllForm.validationEngine('validate');
+        if (isValid == false)
+            return;
+
         var redirectListNew = {};
         $("#showAllTableBody").find('tr').each(function () {
             var cols = $(this).find('input[type=text]');
@@ -99,8 +114,8 @@ $(function () {
         var objRedirect = REDIRECTOR.chromeStorage.getRedirectObject();
         $.each(objRedirect, function (index, value) {
             $("#showAllTableBody").append("<tr>" +
-                                    "<td><input type='text' value='" + index + "' /></td>" +
-                                    "<td><input type='text' value='" + value + "' /></td>" +
+                                    "<td><input type='text' value='" + index + "'  class='validate[required]' /></td>" +
+                                    "<td><input type='text' value='" + value + "'  class='validate[required, custom[url]]'/></td>" +
                                     "<td><input type='button' value='delete' class='delete_row_show_all' /></td>" +
                                 "</tr>");
         });

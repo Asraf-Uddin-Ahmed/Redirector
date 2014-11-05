@@ -2,10 +2,13 @@
 <html>
 <head>
     <title>Redirector - Home</title>
-    
+
+    <link rel="stylesheet" type="text/css" href="validationEngine.jquery.css">
     <link rel="stylesheet" type="text/css" href="options.css">
 
     <script src="jquery-2.1.1.min.js"></script>
+    <script type='text/javascript' src="jquery.validationEngine.js"></script>
+    <script type='text/javascript' src="jquery.validationEngine-en.js"></script>
     <script src="common.js"></script>
     <script src="options.js"></script>
 </head>
@@ -19,34 +22,35 @@
     </div>
 
 
+    <form action="javascript:void(0);" id="addNewForm">
+        <div id="addNewDiv" class="optionalDiv">
+            <input type="text" id="blockWord" placeholder="Enter Word" class="validate[required]" />
+            <br />
+            <input type="text" id="redirectUrl" placeholder="Enter Url" class="validate[required, custom[url]]" value="https://" />
+            <br />
+            <input type="button" value="Add" id="addNewDivAddUrl" />
+            <input type="button" value="Cancel" id="addNewDivCancel" />
+        </div>
+    </form>
 
-    <div id="addNewDiv" class="optionalDiv">
-        <input type="text" id="blockWord" placeholder="Enter Word" />
-        <br />
-        <input type="text" id="redirectUrl" placeholder="Enter Url" />
-        <br />
-        <input type="button" value="Add" id="addNewDivAddUrl" />
-        <input type="button" value="Cancel" id="addNewDivCancel" />
-    </div>
+    <form action="javascript:void(0);" id="showAllForm">
+        <div id="showAllDiv" class="optionalDiv">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Blocked Word</th>
+                        <th>Redirect URL</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
+                <tbody id="showAllTableBody"></tbody>
+            </table>
 
-
-    <div id="showAllDiv" class="optionalDiv">
-        <table>
-            <thead>
-                <tr>
-                    <th>Blocked Word</th>
-                    <th>Redirect URL</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody id="showAllTableBody"></tbody>
-        </table>
-
-        <input type="button" value="Save" id="showAllDivSave" />
-        <input type="button" value="Cancel" id="showAllDivCancel" />
-    </div>
+            <input type="button" value="Save" id="showAllDivSave" />
+            <input type="button" value="Cancel" id="showAllDivCancel" />
+        </div>
+    </form>
 
 </body>
 </html>
