@@ -1,5 +1,5 @@
 
-REDIRECTOR.chromeStorage = function () {
+REDIRECTOR.ChromeStorage = function () {
     var objToReturn = {};
 
     /*

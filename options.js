@@ -1,8 +1,16 @@
 
 
+function goToMainPopup(hideObj) {
+    REDIRECTOR.SoundManager.playWhistle();
+    hideObj.hide(300, function () {
+        $("#mainPopup").show(300);
+    });
+}
+
+
 $(function () {
     
-    REDIRECTOR.chromeStorage.reloadRedirectObject();
+    REDIRECTOR.ChromeStorage.reloadRedirectObject();
 
     var objAddNewForm = $("#addNewForm");
     var objShowAllForm = $("#showAllForm");
@@ -21,8 +29,8 @@ $(function () {
         $("#blockWord").val("");
         $("#redirectUrl").val("https://");
 
-        var objRedirect = REDIRECTOR.chromeStorage.pushUrlByWord(blockWord, redirectUrl);
-        REDIRECTOR.chromeStorage.saveRedirectObject(objRedirect);
+        var objRedirect = REDIRECTOR.ChromeStorage.pushUrlByWord(blockWord, redirectUrl);
+        REDIRECTOR.ChromeStorage.saveRedirectObject(objRedirect);
         goToMainPopup($("#addNewDiv"));
     });
 
@@ -33,7 +41,7 @@ $(function () {
 
 
     $("#showAllTableBody").on("click", ".delete_row_show_all", function () {
-        playDeleteSound();
+        REDIRECTOR.SoundManager.playDeleteSound();
 
         var tr = $(this).closest('tr');
         tr.css("background-color", "#FF3700");
@@ -53,7 +61,7 @@ $(function () {
             redirectListNew[cols[0].value] = cols[1].value;
             //console.log(cols[0].value + " -> " + cols[1].value);
         });
-        REDIRECTOR.chromeStorage.saveRedirectObject(redirectListNew);
+        REDIRECTOR.ChromeStorage.saveRedirectObject(redirectListNew);
         goToMainPopup($("#showAllDiv"));
     });
 
@@ -72,7 +80,7 @@ $(function () {
     $("#showAll").click(function () {
 
         $("#showAllTableBody").empty();
-        var objRedirect = REDIRECTOR.chromeStorage.getRedirectObject();
+        var objRedirect = REDIRECTOR.ChromeStorage.getRedirectObject();
         $.each(objRedirect, function (index, value) {
             $("#showAllTableBody").append("<tr>" +
                                     "<td><input type='text' value='" + index + "'  class='validate[required]' /></td>" +
@@ -87,6 +95,6 @@ $(function () {
     });
 
     $("#addNew, #showAll").click(function () {
-        playClick();
+        REDIRECTOR.SoundManager.playClick();
     });
 });
